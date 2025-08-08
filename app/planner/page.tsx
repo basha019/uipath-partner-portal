@@ -38,14 +38,18 @@ export default function PlannerPage() {
     // Save training plan to database
     const { error: saveError } = await supabase
       .from('training_plans')
-      .insert({
-        user_id: user.id,
-        plan_details: {
-          recommendedTrainings,
-          hoursPerDay,
-          includeWeekends,
+      .upsert(
+        {
+          user_id: user.id,
+          plan_details: {
+            recommendedTrainings,
+            hoursPerDay,
+            includeWeekends,
+          },
+          generated_at: new Date().toISOString(),
         },
-      });
+        { onConflict: 'user_id' }
+      );
 
     if (saveError) {
       console.error('Error saving training plan:', saveError);

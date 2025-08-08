@@ -38,9 +38,12 @@ export default function AssessmentForm({ questions, userId }: AssessmentFormProp
   }
 
   const handleSubmit = async () => {
-    const { error } = await supabase.from('assessments').insert([
-      { user_id: userId, answers: answers },
-    ])
+    const { error } = await supabase
+      .from('assessments')
+      .upsert(
+        { user_id: userId, answers, submitted_at: new Date().toISOString() },
+        { onConflict: 'user_id' }
+      )
 
     if (!error) {
       router.push('/planner') // Redirect to the planner page

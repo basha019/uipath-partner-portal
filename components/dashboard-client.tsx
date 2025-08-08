@@ -40,6 +40,26 @@ export default function DashboardClient({ assessment, trainingPlan }: DashboardC
 
   return (
     <div className="space-y-8">
+      {/* Actions */}
+      <div className="flex flex-wrap items-center gap-3 justify-end">
+        <a
+          href="/assessment"
+          onClick={(e) => {
+            if (!confirm('Retake the assessment? This will overwrite your current training plan after you confirm the new plan.')) {
+              e.preventDefault()
+            }
+          }}
+          className="px-4 py-2 text-white bg-primary-orange rounded-md hover:opacity-90"
+        >
+          Retake Assessment
+        </a>
+        <a
+          href="/planner"
+          className="px-4 py-2 text-white bg-secondary-blue rounded-md hover:opacity-90"
+        >
+          Regenerate Plan
+        </a>
+      </div>
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="bg-white p-6 rounded-lg shadow">
