@@ -38,23 +38,7 @@ export default async function DashboardPage() {
     <div className="min-h-screen bg-light-gray-100">
       <header className="bg-primary-blue shadow-md">
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-white">Dashboard</h1>
-            <div className="flex items-center gap-3">
-              <a
-                href="/assessment"
-                className="px-4 py-2 text-sm font-medium text-white bg-primary-orange rounded-md hover:opacity-90"
-              >
-                Retake Assessment
-              </a>
-              <a
-                href="/planner"
-                className="px-4 py-2 text-sm font-medium text-white bg-secondary-blue rounded-md hover:opacity-90"
-              >
-                Regenerate Plan
-              </a>
-            </div>
-          </div>
+          <h1 className="text-3xl font-bold text-white">Dashboard</h1>
         </div>
       </header>
       <main>

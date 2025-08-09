@@ -18,6 +18,33 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        {/* Global top ribbon actions available on every screen */}
+        <header className="bg-primary-blue shadow-md">
+          <div className="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-end gap-3">
+              <a
+                href="/assessment"
+                className="px-4 py-2 text-sm font-medium text-white bg-primary-orange rounded-md hover:opacity-90"
+              >
+                Retake Assessment
+              </a>
+              <a
+                href="/planner"
+                className="px-4 py-2 text-sm font-medium text-white bg-secondary-blue rounded-md hover:opacity-90"
+              >
+                Regenerate Plan
+              </a>
+              <form action="/api/signout" method="post">
+                <button
+                  type="submit"
+                  className="px-4 py-2 text-sm font-medium text-white bg-gray-700 rounded-md hover:opacity-90"
+                >
+                  Logout
+                </button>
+              </form>
+            </div>
+          </div>
+        </header>
         {children}
         <Chatbot /> 
       </body>
