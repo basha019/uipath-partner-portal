@@ -88,6 +88,9 @@ export default function PlannerPage() {
   return (
     <div className="min-h-screen bg-light-gray-100 flex items-center justify-center">
       <div className="w-full max-w-3xl p-8 space-y-8 bg-white rounded-lg shadow-xl">
+        <div className="flex justify-end">
+          <a href="/dashboard" className="px-3 py-1 text-sm font-medium text-white bg-gray-700 rounded-md hover:opacity-90">Close</a>
+        </div>
         <h1 className="text-3xl font-bold text-center text-dark-gray-900">Your Personalized Training Plan</h1>
         <div className="space-y-4">
           <h2 className="text-xl font-semibold text-dark-gray-900">Recommended Trainings:</h2>

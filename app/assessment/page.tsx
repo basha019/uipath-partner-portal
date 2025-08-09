@@ -29,6 +29,9 @@ export default async function AssessmentPage() {
   return (
     <div className="min-h-screen bg-light-gray-100 flex items-center justify-center">
       <div className="w-full max-w-2xl p-8 space-y-8 bg-white rounded-lg shadow-xl">
+        <div className="flex justify-end">
+          <a href="/dashboard" className="px-3 py-1 text-sm font-medium text-white bg-gray-700 rounded-md hover:opacity-90">Close</a>
+        </div>
         <h1 className="text-3xl font-bold text-center text-dark-gray-900">Partner Assessment</h1>
         <h2 className="text-xl text-center text-gray-600">Role: {profile.role}</h2>
         <AssessmentForm questions={questions} userId={user.id} />
