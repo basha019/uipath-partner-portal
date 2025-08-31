@@ -38,3 +38,14 @@ CREATE POLICY "Allow users to manage their own assessments" ON public.assessment
 
 CREATE POLICY "Allow users to manage their own training plans" ON public.training_plans
   FOR ALL USING (auth.uid() = user_id);
+
+-- Ensure unique index on user_id for upsert support
+CREATE UNIQUE INDEX IF NOT EXISTS assessments_user_id_unique ON public.assessments (user_id);
+CREATE UNIQUE INDEX IF NOT EXISTS training_plans_user_id_unique ON public.training_plans (user_id);
+
+-- Explicit INSERT policies required for RLS (WITH CHECK is evaluated on INSERT)
+CREATE POLICY IF NOT EXISTS "Insert own assessments" ON public.assessments
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY IF NOT EXISTS "Insert own training plans" ON public.training_plans
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
