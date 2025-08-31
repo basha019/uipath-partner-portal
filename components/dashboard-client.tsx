@@ -20,13 +20,24 @@ const barChartData = [
   { name: 'Leadership', 'Current Level': 60, 'Target Level': 85 },
 ];
 
+interface ScorecardRec { title: string; rationale: string }
+interface Scorecard {
+  persona: string
+  total: number
+  correct: number
+  percent: number
+  breakdown: Array<{ question: string; correct: boolean; userAnswer?: string; correctAnswer: string }>
+  recommendations: ScorecardRec[]
+}
+
 interface DashboardClientProps {
   assessment: { answers: any } | null;
   trainingPlan: { plan_details: any } | null;
+  scorecard?: Scorecard | null;
 }
 
-export default function DashboardClient({ assessment, trainingPlan }: DashboardClientProps) {
-  if (!assessment || !trainingPlan) {
+export default function DashboardClient({ assessment, trainingPlan, scorecard }: DashboardClientProps) {
+  if (!assessment && !trainingPlan) {
     return (
       <div className="text-center py-12 bg-white p-8 rounded-lg shadow-md">
         <p className="text-lg text-dark-gray-900">Welcome to your dashboard!</p>
@@ -40,6 +51,29 @@ export default function DashboardClient({ assessment, trainingPlan }: DashboardC
 
   return (
     <div className="space-y-8">
+      {/* Assessment Scorecard */}
+      {scorecard && (
+        <div className="bg-white p-6 rounded-lg shadow">
+          <h3 className="font-semibold text-lg mb-2 text-dark-gray-900">Assessment Results</h3>
+          <p className="text-gray-700 mb-1"><strong>Persona:</strong> {scorecard.persona}</p>
+          <p className="text-gray-700 mb-4"><strong>Score:</strong> {scorecard.percent}% ({scorecard.correct}/{scorecard.total})</p>
+
+          {scorecard.recommendations.length > 0 && (
+            <div className="mt-2">
+              <h4 className="font-semibold text-md text-dark-gray-900 mb-2">Assessment-based Recommendations</h4>
+              <ul className="list-disc list-inside space-y-1">
+                {scorecard.recommendations.map((r) => (
+                  <li key={r.title} className="text-gray-700">
+                    {r.title}
+                    {r.rationale && <div className="text-sm text-gray-500">{r.rationale}</div>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Actions moved to header in app/dashboard/page.tsx */}
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -73,16 +107,24 @@ export default function DashboardClient({ assessment, trainingPlan }: DashboardC
       {/* Training Plan Section */}
       <div className="bg-white p-6 rounded-lg shadow">
         <h3 className="font-semibold text-lg mb-4 text-dark-gray-900">Your Training Plan</h3>
-        <ul className="list-disc list-inside space-y-2">
-          {trainingPlan.plan_details.recommendedTrainings.map((item: any) => (
-            <li key={item.title} className="text-gray-600">
-              {item.title} <span className="text-sm text-gray-500">({item.duration} hours)</span>
-            </li>
-          ))}
-        </ul>
+        {trainingPlan?.plan_details?.planSummary && (
+          <p className="text-gray-700 mb-4">{trainingPlan.plan_details.planSummary}</p>
+        )}
+        {trainingPlan?.plan_details?.recommendedTrainings && (
+          <ul className="list-disc list-inside space-y-2">
+            {trainingPlan.plan_details.recommendedTrainings.map((item: any) => (
+              <li key={item.title} className="text-gray-600">
+                {item.title} <span className="text-sm text-gray-500">({item.duration} hours)</span>
+                {item.rationale && (
+                  <div className="text-sm text-gray-500">{item.rationale}</div>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
         <div className="mt-6 pt-4 border-t">
-          <p className="text-dark-gray-900"><strong>Daily Commitment:</strong> {trainingPlan.plan_details.hoursPerDay} hours</p>
-          <p className="text-dark-gray-900"><strong>Schedule:</strong> Includes weekends? {trainingPlan.plan_details.includeWeekends ? 'Yes' : 'No'}</p>
+          <p className="text-dark-gray-900"><strong>Daily Commitment:</strong> {trainingPlan?.plan_details?.hoursPerDay ?? '-'} hours</p>
+          <p className="text-dark-gray-900"><strong>Schedule:</strong> Includes weekends? {trainingPlan?.plan_details?.includeWeekends ? 'Yes' : 'No'}</p>
         </div>
       </div>
     </div>
