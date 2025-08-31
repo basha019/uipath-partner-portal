@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import Image from 'next/image'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -17,7 +18,7 @@ export default function LoginPage() {
       email,
       password,
       options: {
-        emailRedirectTo: `${location.origin}/auth/callback`,
+        emailRedirectTo: `${location.origin}/auth/callback?type=signup`,
       },
     })
     if (error) {
@@ -42,14 +43,18 @@ export default function LoginPage() {
     }
   }
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut()
-    router.refresh()
-  }
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+        <div className="flex justify-center mb-2">
+          <Image
+            src="/images/uipath-agentic-automation.jpg"
+            alt="UiPath Agentic Automation"
+            width={220}
+            height={80}
+            priority
+          />
+        </div>
         <h1 className="text-2xl font-bold text-center text-gray-900">Login</h1>
         {message && <p className="text-center text-sm text-red-600">{message}</p>}
         <input
@@ -70,7 +75,6 @@ export default function LoginPage() {
         />
         <button onClick={handleSignUp} className="w-full px-4 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Sign Up</button>
         <button onClick={handleSignIn} className="w-full px-4 py-2 font-semibold text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Sign In</button>
-        <button onClick={handleLogout} className="w-full px-4 py-2 font-semibold text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Logout</button>
       </div>
     </div>
   )
