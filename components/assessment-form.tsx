@@ -49,7 +49,8 @@ export default function AssessmentForm({ questions, userId }: AssessmentFormProp
       router.push('/planner') // Redirect to the planner page
     } else {
       console.error('Error submitting assessment:', error)
-      alert('There was an error submitting your assessment.')
+      const msg = (error as any)?.message || (error as any)?.details || 'Unknown error'
+      alert(`There was an error submitting your assessment: ${msg}`)
     }
   }
 
@@ -61,19 +62,22 @@ export default function AssessmentForm({ questions, userId }: AssessmentFormProp
         <h3 className="text-lg font-semibold text-dark-gray-900 mb-4">{currentQuestion.question}</h3>
         {currentQuestion.type === 'multiple-choice' && currentQuestion.options && (
           <div className="space-y-2">
-            {currentQuestion.options.map((option) => (
-              <label key={option} className="flex items-center p-3 rounded-lg bg-light-gray-100 hover:bg-gray-200 cursor-pointer">
-                <input
-                  type="radio"
-                  name={currentQuestion.question}
-                  value={option}
-                  checked={answers[currentQuestion.question] === option}
-                  onChange={(e) => handleAnswerChange(currentQuestion.question, e.target.value)}
-                  className="form-radio h-5 w-5 text-secondary-blue"
-                />
-                <span className="ml-3 text-dark-gray-900">{option}</span>
-              </label>
-            ))}
+            {currentQuestion.options.map((option) => {
+              const letter = option.trim().charAt(0).toUpperCase()
+              return (
+                <label key={option} className="flex items-center p-3 rounded-lg bg-light-gray-100 hover:bg-gray-200 cursor-pointer">
+                  <input
+                    type="radio"
+                    name={currentQuestion.question}
+                    value={letter}
+                    checked={answers[currentQuestion.question] === letter}
+                    onChange={(e) => handleAnswerChange(currentQuestion.question, e.target.value)}
+                    className="form-radio h-5 w-5 text-secondary-blue"
+                  />
+                  <span className="ml-3 text-dark-gray-900">{option}</span>
+                </label>
+              )
+            })}
           </div>
         )}
         {currentQuestion.type === 'text' && (
