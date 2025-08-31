@@ -73,24 +73,30 @@ export default function RoleSelectionPage() {
       <div className="w-full max-w-4xl p-8 text-center">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">Select Your Role</h1>
         <p className="text-lg text-gray-600 mb-12">This will help us personalize your assessment and training plan.</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <button 
-            onClick={() => handleRoleSelect('CxO / Practice Lead')} 
+            onClick={() => handleRoleSelect('Leadership (CEO, CTO, Practice Lead, Head of Alliances)')} 
             className="p-8 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 border-t-4 border-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <h2 className="text-2xl font-semibold text-blue-900">CxO / Practice Lead</h2>
+            <h2 className="text-2xl font-semibold text-blue-900">Leadership (CEO, CTO, Practice Lead, Head of Alliances)</h2>
           </button>
           <button 
-            onClick={() => handleRoleSelect('Sales / Pre-Sales')} 
-            className="p-8 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 border-t-4 border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-400"
-          >
-            <h2 className="text-2xl font-semibold text-orange-500">Sales / Pre-Sales</h2>
-          </button>
-          <button 
-            onClick={() => handleRoleSelect('Technical Architect')} 
+            onClick={() => handleRoleSelect('Solution Architect/ Developers')} 
             className="p-8 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 border-t-4 border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <h2 className="text-2xl font-semibold text-blue-600">Technical Architect</h2>
+            <h2 className="text-2xl font-semibold text-blue-600">Solution Architect/ Developers</h2>
+          </button>
+          <button 
+            onClick={() => handleRoleSelect('Sales/ Presales/ Business Development')} 
+            className="p-8 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 border-t-4 border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-400"
+          >
+            <h2 className="text-2xl font-semibold text-orange-500">Sales/ Presales/ Business Development</h2>
+          </button>
+          <button 
+            onClick={() => handleRoleSelect('Delivery / Project Manager')} 
+            className="p-8 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 border-t-4 border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          >
+            <h2 className="text-2xl font-semibold text-emerald-600">Delivery / Project Manager</h2>
           </button>
         </div>
       </div>
