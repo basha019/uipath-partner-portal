@@ -51,7 +51,12 @@ export default function Chatbot() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to get response from the server.');
+        const errorPayload = await response.json().catch(() => null as unknown);
+        const errorMessage =
+          typeof (errorPayload as any)?.error === 'string'
+            ? (errorPayload as any).error
+            : 'Failed to get response from the server.';
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
@@ -60,7 +65,11 @@ export default function Chatbot() {
 
     } catch (error) {
       console.error('Chatbot error:', error);
-      const errorMessage: Message = { text: 'Sorry, something went wrong. Please try again.', sender: 'bot' };
+      const text =
+        error instanceof Error && error.message
+          ? error.message
+          : 'Sorry, something went wrong. Please try again.';
+      const errorMessage: Message = { text, sender: 'bot' };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
