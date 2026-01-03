@@ -85,7 +85,8 @@ export async function POST(req: NextRequest) {
 
     // 3. Get the final answer from Gemini API
     const genAI = new GoogleGenerativeAI(geminiApiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
+    const modelName = process.env.GEMINI_MODEL?.trim() || 'gemini-1.5-flash-002';
+    const model = genAI.getGenerativeModel({ model: modelName });
     const result = await model.generateContent(enhancedPrompt);
     const response = await result.response;
     const geminiAnswer = response.text();
